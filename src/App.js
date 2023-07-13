@@ -6,11 +6,16 @@ export default function App() {
   const handleAddItems = (item) => {
     setItems((i) => [...i, item]);
   };
+
+  const handleDeleteItem = (id) => {
+    setItems((i) => i.filter((i) => i.id !== id));
+  };
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} />
+      <PackingList items={items} onDeleteItem={handleDeleteItem} />
       <Stats />
     </div>
   );
@@ -64,19 +69,19 @@ const Form = ({ onAddItems }) => {
   );
 };
 
-const PackingList = ({ items }) => {
+const PackingList = ({ items, onDeleteItem }) => {
   return (
     <div className="list">
       <ul>
         {items.map((i) => (
-          <Item key={i.id} item={i} />
+          <Item onDeleteItem={onDeleteItem} key={i.id} item={i} />
         ))}
       </ul>
     </div>
   );
 };
 
-const Item = ({ item }) => {
+const Item = ({ item, onDeleteItem }) => {
   const { id, description, quantity, packed } = item;
 
   return (
@@ -84,7 +89,7 @@ const Item = ({ item }) => {
       <span style={packed ? { textDecoration: "line-through" } : {}}>
         {quantity} {description}
       </span>
-      <button>❌</button>
+      <button onClick={() => onDeleteItem(id)}>❌</button>
     </li>
   );
 };
