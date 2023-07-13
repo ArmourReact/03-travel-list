@@ -9,3 +9,9 @@ A simple application to add items to a "packing list" using forms and state mana
 - Rendering item lists
 - Form submissions
 - Controlled elements
+- Lifting up state
+- Child-to-parent communication
+- Immutable data operations
+- Derived state
+- Sorting and clearing state
+- Proper organisation of components
