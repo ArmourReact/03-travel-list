@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: true },
-];
-
 export default function App() {
+  const [items, setItems] = useState([]);
+
+  const handleAddItems = (item) => {
+    setItems((i) => [...i, item]);
+  };
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAddItems={handleAddItems} />
+      <PackingList items={items} />
       <Stats />
     </div>
   );
@@ -20,10 +20,9 @@ const Logo = () => {
   return <h1>🏝️ Far Away 🧳</h1>;
 };
 
-const Form = () => {
+const Form = ({ onAddItems }) => {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [items, setItems] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +35,7 @@ const Form = () => {
       packed: false,
     };
 
-    setItems((i) => [...i, newItem]);
+    onAddItems(newItem);
     setDescription("");
     setQuantity(1);
   };
@@ -65,11 +64,11 @@ const Form = () => {
   );
 };
 
-const PackingList = () => {
+const PackingList = ({ items }) => {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((i) => (
+        {items.map((i) => (
           <Item key={i.id} item={i} />
         ))}
       </ul>
@@ -93,10 +92,7 @@ const Item = ({ item }) => {
 const Stats = () => {
   return (
     <footer className="stats">
-      <em>
-        💼 You have {initialItems.length} items on your list, and you have
-        packed X (X%)
-      </em>
+      <em>💼 You have X items on your list, and you have packed X (X%)</em>
     </footer>
   );
 };
