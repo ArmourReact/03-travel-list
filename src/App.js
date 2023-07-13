@@ -18,7 +18,8 @@ export default function App() {
   };
 
   const handleClearItems = () => {
-    setItems([]);
+    const confirmed = window.confirm("Do you want to delete all items?");
+    if (confirmed) setItems([]);
   };
 
   return (
